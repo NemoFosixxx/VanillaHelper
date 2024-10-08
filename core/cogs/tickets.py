@@ -82,7 +82,7 @@ class TicketsForming(commands.Cog):
                     custom_id="whitelist_form",
                     components=[
                         disnake.ui.TextInput(
-                            label="НИК В МАЙНКРАФТЕ",
+                            label="Ник в майнкрафте",
                             placeholder="Максимальная длина ника - 16 символов.",
                             custom_id="nickname",
                             style=disnake.TextInputStyle.short,
@@ -90,14 +90,14 @@ class TicketsForming(commands.Cog):
                             required=True
                         ),
                         disnake.ui.TextInput(
-                            label="ЧЕМ ПЛАНИРУЕТЕ ЗАНИМАТЬСЯ НА СЕРВЕРЕ?",
+                            label="Чем планируете заниматься на сервере?",
                             placeholder="Если не знаете - так и пишите.",
                             custom_id="plans",
                             style=disnake.TextInputStyle.paragraph,
                             required=True,
                         ),
                         disnake.ui.TextInput(
-                            label="КАК ВЫ НАШЛИ ЭТОТ СЕРВЕР?",
+                            label="Как вы нашли этот сервер?",
                             placeholder="Через друзей, видео/шортс и т.п. Нам это правда важно!",
                             custom_id="search",
                             style=disnake.TextInputStyle.paragraph,
@@ -107,34 +107,34 @@ class TicketsForming(commands.Cog):
                 )
                 await inter.response.send_modal(modal)
                 
-            elif inter.component.custom_id == "open_complaints":
-                complaints_modal = disnake.ui.Modal(
-                    title="Подача обращения",
-                    custom_id="complaints_form",
-                    components=[
-                        disnake.ui.TextInput(
-                            label="НИК В МАЙНКРАФТЕ",
-                            custom_id="nickname",
-                            style=disnake.TextInputStyle.short,
-                            max_length=16,
-                            required=True
-                        ),
-                        disnake.ui.TextInput(
-                            label="НИКНЕЙМ НАРУШИТЕЛЯ",
-                            placeholder="Если не нужен, ставьте прочерк",
-                            custom_id="griefer",
-                            style=disnake.TextInputStyle.paragraph,
-                            required=True
-                        ),
-                        disnake.ui.TextInput(
-                            label="ВАШ ВОПРОС/ЧТО СЛУЧИЛОСЬ",
-                            custom_id="question",
-                            style=disnake.TextInputStyle.paragraph,
-                            required=True
-                        )
-                    ]
-                )
-                await inter.response.send_modal(complaints_modal)
+            # elif inter.component.custom_id == "open_complaints":
+            #     complaints_modal = disnake.ui.Modal(
+            #         title="Подача обращения",
+            #         custom_id="complaints_form",
+            #         components=[
+            #             disnake.ui.TextInput(
+            #                 label="НИК В МАЙНКРАФТЕ",
+            #                 custom_id="nickname",
+            #                 style=disnake.TextInputStyle.short,
+            #                 max_length=16,
+            #                 required=True
+            #             ),
+            #             disnake.ui.TextInput(
+            #                 label="НИКНЕЙМ НАРУШИТЕЛЯ",
+            #                 placeholder="Если не нужен, ставьте прочерк",
+            #                 custom_id="griefer",
+            #                 style=disnake.TextInputStyle.paragraph,
+            #                 required=True
+            #             ),
+            #             disnake.ui.TextInput(
+            #                 label="ВАШ ВОПРОС/ЧТО СЛУЧИЛОСЬ",
+            #                 custom_id="question",
+            #                 style=disnake.TextInputStyle.paragraph,
+            #                 required=True
+            #             )
+            #         ]
+            #     )
+            #     await inter.response.send_modal(complaints_modal)
                         
     @commands.Cog.listener()
     async def on_modal_submit(self, inter: disnake.ModalInteraction):
@@ -196,70 +196,70 @@ class TicketsForming(commands.Cog):
                 await inter.send(f"Ошибка при добавлении в базу данных: {e}", ephemeral=True)
             
 
-        elif inter.custom_id == "complaints_form":
-            nickname = inter.text_values["nickname"]
-            griefer = inter.text_values["griefer"]
-            question = inter.text_values["question"]
-            user = inter.user
-            self.user_button_id = str(user.id)
-            self.button_nickname = nickname
-            category_complaints = self.category_complaints
-            category = disnake.utils.get(inter.guild.categories, name=category_complaints)
-            if category is None:
-                category = await inter.guild.create_category(name=category_complaints)
+        # elif inter.custom_id == "complaints_form":
+        #     nickname = inter.text_values["nickname"]
+        #     griefer = inter.text_values["griefer"]
+        #     question = inter.text_values["question"]
+        #     user = inter.user
+        #     self.user_button_id = str(user.id)
+        #     self.button_nickname = nickname
+        #     category_complaints = self.category_complaints
+        #     category = disnake.utils.get(inter.guild.categories, name=category_complaints)
+        #     if category is None:
+        #         category = await inter.guild.create_category(name=category_complaints)
                 
-            whitelist_role = inter.guild.get_role(self.whitelist_support)
+        #     whitelist_role = inter.guild.get_role(self.whitelist_support)
 
-            overwrites = {
-                inter.guild.default_role: disnake.PermissionOverwrite(read_messages=False),
-                user: disnake.PermissionOverwrite(
-                    read_messages=True, send_messages=True, add_reactions=True, 
-                    embed_links=True, attach_files=True, read_message_history=True,
-                    external_emojis=True
-                ),
-                whitelist_role: disnake.PermissionOverwrite(
-                    read_messages=True, send_messages=True, add_reactions=True, 
-                    embed_links=True, attach_files=True, read_message_history=True,
-                    external_emojis=True
-                )
-            }
+        #     overwrites = {
+        #         inter.guild.default_role: disnake.PermissionOverwrite(read_messages=False),
+        #         user: disnake.PermissionOverwrite(
+        #             read_messages=True, send_messages=True, add_reactions=True, 
+        #             embed_links=True, attach_files=True, read_message_history=True,
+        #             external_emojis=True
+        #         ),
+        #         whitelist_role: disnake.PermissionOverwrite(
+        #             read_messages=True, send_messages=True, add_reactions=True, 
+        #             embed_links=True, attach_files=True, read_message_history=True,
+        #             external_emojis=True
+        #         )
+        #     }
             
-            complaint_channel = await inter.guild.create_text_channel(name=f'ticket-{user.name}', category=category, overwrites=overwrites)
-            complaint_channel_id = complaint_channel.id
+        #     complaint_channel = await inter.guild.create_text_channel(name=f'ticket-{user.name}', category=category, overwrites=overwrites)
+        #     complaint_channel_id = complaint_channel.id
             
-            await inter.send(f'Твой тикет был создан! <#{complaint_channel_id}>', ephemeral=True)
-            await complaint_channel.send(f'{user.mention} <@&{self.whitelist_support}>', delete_after=1)
+        #     await inter.send(f'Твой тикет был создан! <#{complaint_channel_id}>', ephemeral=True)
+        #     await complaint_channel.send(f'{user.mention} <@&{self.whitelist_support}>', delete_after=1)
             
-            embed2 = disnake.Embed(
-                title="Обращение открыто!",
-                description="Ваш тикет скоро будет рассмотрен! Обычно это не занимает много времени.",
-                color=disnake.Color(0x7857be)
-            )
-            embed2.add_field(name="Ник в Майнкрафте", value=nickname, inline=False)
-            embed2.add_field(name="Ник нарушителя", value=griefer, inline=False)
-            embed2.add_field(name="Что произошло/Вопрос", value=question, inline=False)
+        #     embed2 = disnake.Embed(
+        #         title="Обращение открыто!",
+        #         description="Ваш тикет скоро будет рассмотрен! Обычно это не занимает много времени.",
+        #         color=disnake.Color(0x7857be)
+        #     )
+        #     embed2.add_field(name="Ник в Майнкрафте", value=nickname, inline=False)
+        #     embed2.add_field(name="Ник нарушителя", value=griefer, inline=False)
+        #     embed2.add_field(name="Что произошло/Вопрос", value=question, inline=False)
             
-            message = await complaint_channel.send(embed=embed2, components=[
-                disnake.ui.Button(label="Закрыть тикет", style=disnake.ButtonStyle.danger, custom_id="close_ticket_complaints")
-            ])
-            await message.pin()
+        #     message = await complaint_channel.send(embed=embed2, components=[
+        #         disnake.ui.Button(label="Закрыть тикет", style=disnake.ButtonStyle.danger, custom_id="close_ticket_complaints")
+        #     ])
+        #     await message.pin()
 
     @commands.Cog.listener()
     async def on_button_click(self, inter: disnake.MessageInteraction):
         try:
-            if inter.component.custom_id == "close_ticket_complaints":
-                if any(role.id == config.get('whitelist_role_id') for role in inter.user.roles):
-                    user = inter.user.name
-                    channel = inter.channel.name
-                    cmd_channel = self.bot.get_channel(config.get('alert_channel'))
-                    await cmd_channel.send(f"Тикет {channel} был `закрыт` следующим админом: {user}")
-                    await inter.send("Тикет будет удалён через 3 секунды...")
-                    await asyncio.sleep(3)
-                    await inter.channel.delete()
-                else:
-                    await inter.send("У вас нет прав на использование этой кнопки", ephemeral=True)
+            # if inter.component.custom_id == "close_ticket_complaints":
+            #     if any(role.id == config.get('whitelist_role_id') for role in inter.user.roles):
+            #         user = inter.user.name
+            #         channel = inter.channel.name
+            #         cmd_channel = self.bot.get_channel(config.get('alert_channel'))
+            #         await cmd_channel.send(f"Тикет {channel} был `закрыт` следующим админом: {user}")
+            #         await inter.send("Тикет будет удалён через 3 секунды...")
+            #         await asyncio.sleep(3)
+            #         await inter.channel.delete()
+            #     else:
+            #         await inter.send("У вас нет прав на использование этой кнопки", ephemeral=True)
     
-            elif inter.component.custom_id == "close_ticket":
+            if inter.component.custom_id == "close_ticket":
                 await inter.send("Тикет будет удалён через 3 секунды...")
                 await asyncio.sleep(3)
                 await inter.channel.delete()
@@ -320,26 +320,26 @@ class TicketsForming(commands.Cog):
             logger.error(f"Error in on_button_click: {e}")
             await inter.send("Произошла ошибка при обработке взаимодействия", ephemeral=True)
             
-    @setup.sub_command(description="Создаёт эмбед для подачи заявки и категорию с тикетами, если её нет", name="complaints")
-    @commands.has_role(config.get('bot_admin'))
-    async def setup_complaints(self, inter: disnake.ApplicationCommandInteraction):
-        category_complaints = self.category_complaints
-        category = disnake.utils.get(inter.guild.categories, name=category_complaints)
-        if category is None:
-            category = await inter.guild.create_category(name=category_complaints)
+    # @setup.sub_command(description="Создаёт эмбед для подачи заявки и категорию с тикетами, если её нет", name="complaints")
+    # @commands.has_role(config.get('bot_admin'))
+    # async def setup_complaints(self, inter: disnake.ApplicationCommandInteraction):
+    #     category_complaints = self.category_complaints
+    #     category = disnake.utils.get(inter.guild.categories, name=category_complaints)
+    #     if category is None:
+    #         category = await inter.guild.create_category(name=category_complaints)
         
-        embed = disnake.Embed(
-            title='Подача жалобы/ Вопроса к админам',
-            description='Для того чтобы открыть обращение, нажмите кнопку ниже!',
-            color=disnake.Color(0x7857be)
-        )
-        embed.set_image(url='https://cdn.discordapp.com/attachments/415752039713472513/1288382655418859564/xbouw053Prs.jpg?ex=66f4fb5a&is=66f3a9da&hm=1bfdf0b9e19a1f202accda11cd96f0f27785dde3ee977ad36fbd19c3e1fcb61c&')
-        await inter.send(
-            embed=embed,
-            components=[
-                disnake.ui.Button(label="📃 Открыть обращение", style=disnake.ButtonStyle.success, custom_id="open_complaints"),
-            ],
-        )
-
+    #     embed = disnake.Embed(
+    #         title='Подача жалобы/ Вопроса к админам',
+    #         description='Для того чтобы открыть обращение, нажмите кнопку ниже!',
+    #         color=disnake.Color(0x7857be)
+    #     )
+    #     embed.set_image(url='https://cdn.discordapp.com/attachments/415752039713472513/1288382655418859564/xbouw053Prs.jpg?ex=66f4fb5a&is=66f3a9da&hm=1bfdf0b9e19a1f202accda11cd96f0f27785dde3ee977ad36fbd19c3e1fcb61c&')
+    #     await inter.send(
+    #         embed=embed,
+    #         components=[
+    #             disnake.ui.Button(label="📃 Открыть обращение", style=disnake.ButtonStyle.success, custom_id="open_complaints"),
+    #         ],
+    #     )
+         
 def setup(bot: commands.Bot):
     bot.add_cog(TicketsForming(bot))

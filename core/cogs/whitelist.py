@@ -10,9 +10,6 @@ from mcrcon import MCRcon
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# file_path = 'config.json'
-# with open(file_path, 'r', encoding='UTF-8') as file:
-#     json_data = json.load(file)
 
 file_path = 'config.yml'
 with open(file_path, 'r') as file:
@@ -51,7 +48,7 @@ class WhitelistAdder(commands.Cog):
     @whitelist.sub_command(description='Добавляет игрока в вайтлист', name='add')
     @commands.has_role(config.get('whitelist_role_id'))
     async def whitelist_add(self, inter: disnake.ApplicationCommandInteraction, nickname: str, user_id: str):
-        await inter.response.defer()  # Defer the interaction response
+        await inter.response.defer()
         cmd_channel = self.bot.get_channel(config.get('alert_channel'))
         user = inter.user.name
         try:
@@ -91,7 +88,7 @@ class WhitelistAdder(commands.Cog):
     @whitelist.sub_command(description='Удаляет игрока из вайтлиста', name='remove')
     @commands.has_role(config.get('whitelist_role_id'))
     async def whitelist_remove(self, inter: disnake.ApplicationCommandInteraction, nickname: str = None, user_id: str = None):
-        await inter.response.defer()  # Defer the interaction response
+        await inter.response.defer()
         cmd_channel = self.bot.get_channel(config.get('alert_channel'))
         user = inter.user.name
         try:

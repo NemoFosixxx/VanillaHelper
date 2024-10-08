@@ -10,8 +10,7 @@ with open(file_path, 'r') as file:
 class TicketUtils(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.allowed_categories = [1284369542398607391, 1288396219961573468]
-        self.whitelist_role_id = 123456789012345678  # Замени на ID роли whitelist
+        self.allowed_categories = [1284369542398607391, 1288396219961573468, 1292151984761213060, 1292152137937063959, 1292152320443940886, 1292152345248923754] #id категорий, в которых можно юзать /add /remove
 
     @commands.slash_command(description='Добавить игрока в тикет', name='add')
     @commands.has_role(config.get('whitelist_role_id'))
@@ -36,7 +35,6 @@ class TicketUtils(commands.Cog):
                 )
                 await inter.channel.set_permissions(user, overwrite=overwrites)
 
-                # Отправляем сообщение с никнеймом пользователя
                 await inter.send(f"Пользователь <@{user_id}> был добавлен в этот тикет!")
 
         else:
@@ -63,7 +61,6 @@ class TicketUtils(commands.Cog):
                 )
                 await inter.channel.set_permissions(user, overwrite=overwrites)
 
-                # Отправляем сообщение с никнеймом пользователя
                 await inter.send(f"Пользователь <@{user_id}> был удалён из этого тикета!")
         else:
             await inter.send("Эту команду можно использовать только в определённых категориях!", ephemeral=True)

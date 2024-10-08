@@ -4,7 +4,7 @@ import yaml
 command_sync_flags = commands.CommandSyncFlags.default()
 command_sync_flags.sync_commands_debug = True
 
-bot = commands.Bot(command_prefix='!', test_guilds=[1283761458215387228], command_sync_flags=command_sync_flags, intents=disnake.Intents.all()) #test_guilds=[1217058758862307348, 1253363342391640175]
+bot = commands.Bot(command_prefix='!', test_guilds=[1217058758862307348], command_sync_flags=command_sync_flags, intents=disnake.Intents.all()) #test_guilds=[ 1283761458215387228]
 
 
 
